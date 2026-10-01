@@ -1,0 +1,3 @@
+test,stat,df,p
+first-name exemplar (cluster-robust Wald),145.28998716422996,30,4.55440305926265e-17
+surname exemplar within ethnicity (cluster-robust Wald),13.506063507799208,15,0.5632708699929024

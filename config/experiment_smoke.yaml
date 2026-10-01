@@ -1,0 +1,79 @@
+# SMOKE-TEST config: identical design, mock models, sandboxed output paths.
+# Used only via AUDIT_CONFIG env var by src/smoke_test.py. Never for real runs.
+
+seed: 20260702
+
+paths:
+  design: data/design            # read-only reuse of the real hashed design
+  raw: data/smoke/raw
+  processed: data/smoke/processed
+  tables: results/smoke/tables
+  figures: results/smoke/figures
+  paper_tables: results/smoke/paper_tables   # NEVER paper/tables — mock numbers
+                                             # must not be reachable by main.tex
+
+choice_set:
+  n_alternatives: 5
+  constant_lines:
+    specialty: "Family medicine physician"
+    credentials: "Board-certified, accepting new patients"
+    location: "Practice located within 20 minutes of you"
+
+attributes:
+  rating:            { label: "Patient rating",            levels: [3.9, 4.3, 4.7] }
+  volume:            { label: "Number of patient reviews", levels: [12, 85, 400] }
+  recency:           { label: "Most recent review",        levels: ["3 days ago", "11 months ago"] }
+  feedback_response: { label: "Practice responds to patient feedback", levels: [present, absent] }
+  affiliation:       { label: "Affiliation",               levels: [network, independent] }
+  price:             { label: "New-patient visit fee (USD)", levels: [90, 140, 190] }
+  telehealth:        { label: "Telehealth visits available",  levels: [present, absent] }
+  experience:        { label: "Years in practice",         levels: [8, 18, 28] }
+  gender:            { label: "Physician gender (name-signaled)",    levels: [female, male] }
+  ethnicity:         { label: "Physician ethnicity (name-signaled)", levels: [white, black, hispanic, east_asian, south_asian] }
+
+personas:
+  new_in_town: >-
+    I just moved to the area and need to find a primary care doctor for a
+    routine checkup and ongoing care.
+  chronic: >-
+    I manage type 2 diabetes and need a primary care doctor I can see
+    regularly for follow-up visits and prescription management.
+  budget: >-
+    I do not have health insurance and will be paying for my visits out of
+    pocket, so cost genuinely matters to me.
+
+n_templates: 9
+
+arms:
+  main:        { n_trials: 3024, temperature: 0.7, format: card,    response: choice_first }
+  grounded:    { n_trials: 297,  temperature: 0.7, format: snippet, response: choice_first }
+  rank_top3:   { n_trials: 297,  temperature: 0.7, format: card,    response: rank3 }
+  field_order: { n_trials: 189,  temperature: 0.7, format: card,    response: reason_first }
+  temp0:       { n_trials: 594,  temperature: 0.0, format: card,    response: choice_first }
+  retest:      { n_trials: 108,  temperature: 0.7, format: card,    response: choice_first, reps: 5 }
+  letter:      { n_trials: 297,  temperature: 0.7, format: card,    response: letter, requires_logprobs: true }
+  nopersona:     { n_trials: 297, temperature: 0.7, format: card,          response: choice_first, persona_override: neutral }
+  card_reversed: { n_trials: 189, temperature: 0.7, format: card_reversed, response: choice_first }
+
+pilot:
+  n_trials: 50
+
+generation:
+  top_p: 0.9
+  max_tokens: 220
+  retries: 2
+  timeout_s: 120
+
+models:
+  local:
+    - { id: "mock-alpha", provider: mock }
+    - { id: "mock-beta",  provider: mock }   # 1.35x rating weight (heterogeneity)
+  frontier: []
+
+reason_judge: { id: "gemma2:2b", provider: ollama }   # never invoked in smoke
+
+gpu_guard:
+  max_util_pct: 10
+  max_mem_mb: 600
+  checks: 3
+  interval_s: 60

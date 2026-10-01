@@ -1,0 +1,11 @@
+term,amce_pp_main,amce_pp_rank_top3,diff_pp
+C(rating)[T.4.7],31.77,39.43,7.66
+C(volume)[T.400],8.72,10.26,1.54
+C(price)[T.190],-22.03,-16.89,5.14
+C(experience)[T.28],2.59,3.97,1.38
+recent,2.75,2.49,-0.26
+responds,2.11,1.76,-0.35
+network,-0.1,-0.57,-0.47
+telehealth,3.46,2.4,-1.06
+female,2.75,4.89,2.14
+eth_black,0.67,1.15,0.48

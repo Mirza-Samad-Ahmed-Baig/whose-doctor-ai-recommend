@@ -1,0 +1,153 @@
+# =============================================================================
+# Algorithm audit of reputation and demographic signals in LLM-assisted
+# physician choice ("Whose doctor does the AI recommend?").
+# Single source of truth for design, models, arms, and decoding settings.
+# Target journal: Journal of Medical Internet Research. Created 2026-07-02.
+#
+# Attribute levels for rating/recency deliberately mirror the hotel audit
+# (research paper 4) to enable cross-domain comparison of signal weights.
+# Physician names are a RANDOMIZED TREATMENT: gender x ethnicity cells are
+# drawn independently per card and rendered via audit-study name pools
+# defined in src/design.py (Bertrand & Mullainathan 2004; Gaddis 2017).
+# =============================================================================
+
+seed: 20260702            # master seed for all design randomization
+
+paths:
+  design: data/design
+  raw: data/raw
+  processed: data/processed
+  tables: results/tables
+  figures: results/figures
+  paper_tables: paper/tables   # LaTeX table floats consumed by main.tex
+
+# ---------------------------------------------------------------------------
+# Choice-set construction
+# ---------------------------------------------------------------------------
+choice_set:
+  n_alternatives: 5
+  constant_lines:           # held constant across all cards (stated controls)
+    specialty: "Family medicine physician"
+    credentials: "Board-certified, accepting new patients"
+    location: "Practice located within 20 minutes of you"
+
+attributes:
+  rating:
+    label: "Patient rating"
+    levels: [3.9, 4.3, 4.7]
+  volume:
+    label: "Number of patient reviews"
+    levels: [12, 85, 400]
+  recency:
+    label: "Most recent review"
+    levels: ["3 days ago", "11 months ago"]
+  feedback_response:
+    label: "Practice responds to patient feedback"
+    levels: [present, absent]
+  affiliation:
+    label: "Affiliation"
+    levels: [network, independent]
+  price:
+    label: "New-patient visit fee (USD)"
+    levels: [90, 140, 190]
+  telehealth:
+    label: "Telehealth visits available"
+    levels: [present, absent]
+  experience:
+    label: "Years in practice"
+    levels: [8, 18, 28]
+  gender:
+    label: "Physician gender (name-signaled)"
+    levels: [female, male]
+  ethnicity:
+    label: "Physician ethnicity (name-signaled)"
+    levels: [white, black, hispanic, east_asian, south_asian]
+
+personas:
+  new_in_town: >-
+    I just moved to the area and need to find a primary care doctor for a
+    routine checkup and ongoing care.
+  chronic: >-
+    I manage type 2 diabetes and need a primary care doctor I can see
+    regularly for follow-up visits and prescription management.
+  budget: >-
+    I do not have health insurance and will be paying for my visits out of
+    pocket, so cost genuinely matters to me.
+
+n_templates: 9            # paraphrased prompt templates defined in src/stimuli.py
+
+# ---------------------------------------------------------------------------
+# Experimental arms (trials are COMMON across models within each arm)
+# ---------------------------------------------------------------------------
+arms:
+  main:        { n_trials: 3024, temperature: 0.7, format: card,    response: choice_first }
+  grounded:    { n_trials: 297,  temperature: 0.7, format: snippet, response: choice_first }
+  rank_top3:   { n_trials: 297,  temperature: 0.7, format: card,    response: rank3 }
+  field_order: { n_trials: 189,  temperature: 0.7, format: card,    response: reason_first }
+  temp0:       { n_trials: 594,  temperature: 0.0, format: card,    response: choice_first }  # subset rerun
+  retest:      { n_trials: 108,  temperature: 0.7, format: card,    response: choice_first, reps: 5 }
+  letter:      { n_trials: 297,  temperature: 0.7, format: card,    response: letter, requires_logprobs: true }
+  nopersona:     { n_trials: 297, temperature: 0.7, format: card,          response: choice_first, persona_override: neutral }
+  card_reversed: { n_trials: 189, temperature: 0.7, format: card_reversed, response: choice_first }
+
+pilot:
+  n_trials: 50            # leading slice of the main arm
+
+generation:
+  top_p: 0.9
+  max_tokens: 220
+  retries: 2              # re-ask with stricter reminder on parse failure
+  timeout_s: 120
+
+# ---------------------------------------------------------------------------
+# Model panel
+#   provider: ollama | openai_compat | azure
+#   For openai_compat, api_key_env names the environment variable holding the
+#   key; base_url may point at OpenAI, OpenRouter, or any compatible endpoint.
+# ---------------------------------------------------------------------------
+models:
+  local:
+    - { id: "llama3.2:3b",                provider: ollama }
+    - { id: "qwen2.5:3b",                 provider: ollama }
+    - { id: "phi3:mini",                  provider: ollama }
+    - { id: "mistral:7b-instruct-q4_K_M", provider: ollama }
+    # Panel extension (added 2026-07-02, before analysis of any main-arm
+    # data): gemma3 adds the Google family; llama3.1:8b gives a within-family
+    # scale contrast vs llama3.2:3b; deepseek-r1:7b is a reasoning-model
+    # contrast contingent on a parse pilot (thinking tokens may exhaust the
+    # generation budget -- excluded if pilot parse failure exceeds 5%).
+    - { id: "gemma3:4b",                  provider: ollama }
+    - { id: "llama3.1:8b",                provider: ollama }
+    - { id: "deepseek-r1:7b",             provider: ollama }
+  frontier:
+    # Frontier panel: run on the co-author's machine with their native keys
+    # (see docs/COAUTHOR_RUNBOOK.md). Verify exact ids against each provider's
+    # /models endpoint at run start and record final ids + dates in design_meta.
+    #
+    # claude-sonnet-4-6: native Anthropic API. Chosen over Sonnet 5/Opus 4.7+
+    # deliberately: those models reject non-default temperature, which our
+    # main (0.7) and temp0 (0.0) arms require. No seed parameter; no logprobs
+    # (letter arm records sampled choices only).
+    - { id: "claude-sonnet-4-6",   provider: anthropic,     api_key_env: ANTHROPIC_API_KEY, enabled: false }
+    # gemini-2.5-flash: Google's OpenAI-compatible endpoint.
+    - { id: "gemini-2.5-flash",    provider: openai_compat, base_url: "https://generativelanguage.googleapis.com/v1beta/openai", api_key_env: GEMINI_API_KEY, enabled: false }
+    # OpenAI: pin the current flagship chat snapshot at run start. If the API
+    # rejects sampling params (reasoning-series models), set omit_sampling: true
+    # and skip the temp0 arm for this model.
+    - { id: "gpt-5.5-2026-04-23",  provider: openai_compat, base_url: "https://api.openai.com/v1", api_key_env: OPENAI_API_KEY, enabled: false }
+    # claude-haiku-4-5: accepts temperature; also the only API-runnable target
+    # of the session-pilot predictions (dist/.../predicted_from_pilot), enabling
+    # the preregistered-exploratory pilot-forecast vs full-run comparison.
+    - { id: "claude-haiku-4-5",    provider: anthropic,     api_key_env: ANTHROPIC_API_KEY, enabled: false }
+    # gpt-4o-mini via Azure OpenAI (user-provided deployment). Supports
+    # temperature, seed, json_object, and logprobs -- fully protocol-compatible.
+    - { id: "gpt-4o-mini",         provider: azure,         api_key_env: AZURE_OPENAI_API_KEY, endpoint_env: AZURE_OPENAI_ENDPOINT, deployment_env: AZURE_OPENAI_DEPLOYMENT, api_version: "2025-01-01-preview", enabled: true }
+
+# Judge model for reason coding (must NOT be in the audited panel)
+reason_judge: { id: "gemma2:2b", provider: ollama }
+
+gpu_guard:
+  max_util_pct: 10
+  max_mem_mb: 600
+  checks: 3
+  interval_s: 60

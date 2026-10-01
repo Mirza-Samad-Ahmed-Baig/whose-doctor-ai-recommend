@@ -1,0 +1,28 @@
+\begin{table}[tbp]
+\centering
+\caption{Between-model heterogeneity in selected AMCEs.}
+\label{tab:heterogeneity}
+\resizebox{\ifdim\width>\linewidth \linewidth\else \width\fi}{!}{%
+\begin{tabular}{lrrrrrrrr}
+\toprule
+Model & \shortstack{Rating\\4.7} & \shortstack{Fee\\\$190} & \shortstack{Position\\5} & \shortstack{Female-\\signaled} & \shortstack{Black-\\signaled} & \shortstack{Hispanic-\\signaled} & \shortstack{E.~Asian-\\signaled} & \shortstack{S.~Asian-\\signaled} \\
+\midrule
+gemma3:4b & 35.4$^{*}$ & -19.3$^{*}$ & -7.7$^{*}$ & 1.0 & 2.4$^{*}$ & 1.8$^{*}$ & 1.9$^{*}$ & 4.2$^{*}$ \\
+gpt-4o-mini & 35.9$^{*}$ & -27.7$^{*}$ & -6.3$^{*}$ & 0.8 & 0.4 & 1.2 & 0.2 & 2.6$^{*}$ \\
+llama3.1:8b & 32.4$^{*}$ & -28.0$^{*}$ & -18.6$^{*}$ & 2.6$^{*}$ & 0.2 & -0.3 & 0.7 & 2.0$^{*}$ \\
+llama3.2:3b & 26.9$^{*}$ & -26.4$^{*}$ & -3.6$^{*}$ & 7.4$^{*}$ & -0.3 & -0.7 & -0.5 & 2.6$^{*}$ \\
+mistral:7b & 20.1$^{*}$ & -14.0$^{*}$ & -15.6$^{*}$ & -0.5$^{\dagger}$ & 7.2$^{*}$ & 11.9$^{*}$ & -0.4 & 2.8$^{*}$ \\
+phi3:mini & 39.8$^{*}$ & -9.5$^{*}$ & 4.4$^{*}$ & 5.2$^{*}$ & 4.3$^{*}$ & 5.4$^{*}$ & 0.5 & 5.7$^{*}$ \\
+qwen2.5:3b & 29.3$^{*}$ & -15.1$^{*}$ & 4.3$^{*}$ & 1.0 & -4.8$^{*}$ & 0.3 & -0.6 & 0.3 \\
+\midrule
+Random-effects mean & 31.4 & -20.0 & -6.1 & 2.5 & 1.3 & 2.8 & 0.3 & 2.9 \\
+\quad 95\% prediction interval & \footnotesize[13.7, 49.0] & \footnotesize[-40.7, 0.7] & \footnotesize[-30.1, 17.8] & \footnotesize[-5.0, 10.0] & \footnotesize[-8.7, 11.3] & \footnotesize[-8.9, 14.5] & \footnotesize[-0.6, 1.1] & \footnotesize[-1.1, 6.9] \\
+\quad $I^2$ & 99\% & 99\% & 99\% & 96\% & 94\% & 95\% & 0\% & 70\% \\
+Model$\times$attribute Wald & \footnotesize $\chi^2_{12}=753$ & \footnotesize $\chi^2_{12}=877$ & \footnotesize $\chi^2_{24}=1255$ & \footnotesize $\chi^2_{6}=197$ & \multicolumn{4}{c}{\footnotesize $\chi^2_{24}=331$} \\
+\bottomrule
+\end{tabular}
+}
+
+\smallskip
+\parbox{\textwidth}{\footnotesize\textit{Note.} Post hoc (reviewer-requested) analysis. Entries are per-model AMCEs in percentage points from separate linear probability models (main arm, choice-set--clustered SEs). $^{*}$95\% CI excludes zero; $^{\dagger}$statistically equivalent to zero within $\pm$1.5 pp (TOST $p<.05$). Random-effects summaries use DerSimonian--Laird weights across the seven models; the prediction interval ($t_{5}$) indicates the range expected for a further model resembling this panel and is approximate because all models saw the same stimuli. The Wald row tests equality of the whole attribute family across models (ethnicity: all four contrasts jointly); every test has $P<.001$.}
+\end{table}

@@ -1,0 +1,20 @@
+{
+  "created_utc": "2026-07-02T07:02:44.808864+00:00",
+  "seed": 20260702,
+  "n_trials_main": 3024,
+  "n_doctor_rows": 15120,
+  "subset_sizes": {
+    "temp0": 594,
+    "grounded": 297,
+    "rank_top3": 297,
+    "field_order": 189,
+    "retest": 108,
+    "letter": 297,
+    "nopersona": 297,
+    "card_reversed": 189
+  },
+  "sha256": {
+    "trials": "816419a05afd8b84ae90a7c9a1fbc2fe194740d4de2284008043770b54f79ad9",
+    "doctors": "4a8a56a1f9f98154c93b1e01bf786b2bd1d69eb0848aa622bb87834265757527"
+  }
+}

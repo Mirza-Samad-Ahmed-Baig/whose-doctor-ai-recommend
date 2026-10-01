@@ -1,0 +1,8 @@
+model,modal_share,entropy
+gemma3:4b,0.993,0.015
+gpt-4o-mini,0.967,0.064
+llama3.1:8b,0.919,0.155
+llama3.2:3b,0.856,0.295
+mistral:7b-instruct-q4_K_M,0.732,0.56
+phi3:mini,0.822,0.368
+qwen2.5:3b,0.865,0.274

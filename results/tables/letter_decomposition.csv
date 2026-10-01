@@ -1,0 +1,12 @@
+section,term,coef_pp,se_pp,p,added_r2,block_only_r2
+coefficient,C(slot)[T.2],4.42,3.496,0.2062,,
+coefficient,C(slot)[T.3],7.952,3.59,0.0268,,
+coefficient,C(slot)[T.4],3.991,3.441,0.2461,,
+coefficient,C(slot)[T.5],1.241,3.296,0.7066,,
+coefficient,C(letter)[T.B],0.816,3.678,0.8244,,
+coefficient,C(letter)[T.C],2.904,3.748,0.4383,,
+coefficient,C(letter)[T.D],-0.733,3.614,0.8393,,
+coefficient,C(letter)[T.E],-7.277,3.259,0.0255,,
+partial_r2,slot | letter,,,,0.005,0.0045
+partial_r2,letter | slot,,,,0.0077,0.0072
+partial_r2,full,,,,0.0122,0.0122

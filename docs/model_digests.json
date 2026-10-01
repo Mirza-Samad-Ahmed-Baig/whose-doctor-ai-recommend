@@ -1,0 +1,32 @@
+{
+  "llama3.2:3b": "not recoverable: manifest removed before archiving",
+  "qwen2.5:3b": {
+    "weights_digest": "sha256:5ee4f07cdb9beadbbb293e85803c569b01bd37ed059d2715faa7bb405f31caa6",
+    "size": 1929903008
+  },
+  "phi3:mini": {
+    "weights_digest": "sha256:633fc5be925f9a484b61d6f9b9a78021eeb462100bd557309f01ba84cac26adf",
+    "size": 2176177120
+  },
+  "mistral:7b-instruct-q4_K_M": {
+    "weights_digest": "sha256:faf975975644f275f00075e7cf79cd207642412560640cd1930afbab95fea25c",
+    "size": 4369375840
+  },
+  "gemma3:4b": {
+    "weights_digest": "sha256:aeda25e63ebd698fab8638ffb778e68bed908b960d39d0becc650fa981609d25",
+    "size": 3338792448
+  },
+  "llama3.1:8b": {
+    "weights_digest": "sha256:667b0c1932bc6ffc593ed1d03f895bf2dc8dc6df21db3042284a6f4416b06a29",
+    "size": 4920738944
+  },
+  "deepseek-r1:7b": {
+    "weights_digest": "sha256:96c415656d377afbff962f6cdb2394ab092ccbcbaab4b82525bc4ca800fe8a49",
+    "size": 4683073184
+  },
+  "gemma2:2b": {
+    "weights_digest": "sha256:7462734796d67c40ecec2ca98eddf970e171dbb6b370e43fd633ee75b69abe1b",
+    "size": 1629509152
+  },
+  "gpt-4o-mini": "Azure OpenAI deployment 'gpt-4o-mini', API version 2025-01-01-preview; model snapshot not logged"
+}

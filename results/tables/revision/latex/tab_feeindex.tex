@@ -1,0 +1,32 @@
+\begin{table}[tbp]
+\centering
+\caption{Fee-scaled trade-off indices (pooled, main arm).}
+\label{tab:feeindex}
+\resizebox{\ifdim\width>\linewidth \linewidth\else \width\fi}{!}{%
+\begin{tabular}{lrcrc}
+\toprule
+Attribute & AMCE (pp) & Fee-range index [95\% CI] & \shortstack{Linearized\\\$ (as submitted)} & \shortstack{Segment-specific\\\$ range} \\
+\midrule
+Rating 4.3 (vs 3.9) & 8.1 & 0.40 [0.36, 0.45] & 40 & 28--72 \\
+Rating 4.7 (vs 3.9) & 31.4 & 1.57 [1.47, 1.67] & 157 & beyond range \\
+85 reviews (vs 12) & 4.8 & 0.24 [0.20, 0.28] & 24 & 17--43 \\
+400 reviews (vs 12) & 8.4 & 0.42 [0.37, 0.47] & 42 & 29--76 \\
+Recent review (vs 11 mo.) & 3.8 & 0.19 [0.15, 0.23] & 19 & 13--34 \\
+Responds to patient feedback & 2.1 & 0.10 [0.07, 0.14] & 10 & 7--19 \\
+Hospital-affiliated (vs independent) & 0.3 & 0.02 [-0.02, 0.05] & 2 & 1--3 \\
+Telehealth available & 2.8 & 0.14 [0.10, 0.18] & 14 & 10--25 \\
+18 yrs in practice (vs 8) & 0.9 & 0.04 [0.00, 0.09] & 4 & 3--8 \\
+28 yrs in practice (vs 8) & 2.1 & 0.10 [0.06, 0.15] & 10 & 7--19 \\
+Female-signaled name (vs male) & 2.5 & 0.13 [0.09, 0.16] & 13 & 9--22 \\
+Black-signaled name (vs White) & 1.3 & 0.07 [0.01, 0.12] & 7 & 5--12 \\
+Hispanic-signaled name (vs White) & 2.8 & 0.14 [0.08, 0.20] & 14 & 10--25 \\
+East Asian-signaled name (vs White) & 0.3 & 0.01 [-0.04, 0.06] & 1 & 1--2 \\
+South Asian-signaled name (vs White) & 2.9 & 0.14 [0.09, 0.20] & 14 & 10--26 \\
+First-listed (vs avg.\ slots 2--5) & 2.3 & 0.11 [0.07, 0.16] & 11 & 8--20 \\
+\bottomrule
+\end{tabular}
+}
+
+\smallskip
+\parbox{\textwidth}{\footnotesize\textit{Note.} Fee-range index = AMCE $\div$ absolute AMCE of \$190 vs \$90 (20.0 pp), with Krinsky--Robb 95\% intervals (10{,}000 draws); an index of 0.13 means the effect equals 13\% of the penalty for moving across the full tested fee range. It is the prespecified fee-equivalent divided by \$100 and is a within-experiment trade-off ratio, not a willingness to pay. The fee response is not linear (\$90$\to$\$140: 0.29 pp per \$; \$140$\to$\$190: 0.11 pp per \$; linearity Wald $\chi^2_1=131$, $P<.001$), so dollar conversions depend on the segment used: the last column converts with the lower and upper segment slopes. Effects larger than the whole tested fee penalty (index $>1$) have no within-range dollar equivalent.}
+\end{table}

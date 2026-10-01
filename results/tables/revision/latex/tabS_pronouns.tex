@@ -1,0 +1,24 @@
+\begin{table}[tbp]
+\centering
+\caption{Perceived gender: pronouns in stated reasons versus the name-signaled gender of the chosen physician.}
+\label{tab:S_pronouns}
+\begin{tabular}{lrrrr}
+\toprule
+Model & Reasons & \shortstack{Gendered\\pronoun (\%)} & \shortstack{Single-gender\\pronoun ($n$)} & \shortstack{Agrees with\\name signal (\%)} \\
+\midrule
+gemma3:4b & 2{,}999 & 65.3 & 1{,}959 & 99.6 \\
+gpt-4o-mini & 3{,}024 & 90.2 & 2{,}727 & 99.2 \\
+llama3.1:8b & 3{,}024 & 38.7 & 1{,}169 & 99.4 \\
+llama3.2:3b & 3{,}024 & 25.8 & 779 & 99.1 \\
+mistral:7b & 3{,}024 & 21.8 & 658 & 97.7 \\
+phi3:mini & 3{,}024 & 36.7 & 1{,}109 & 98.2 \\
+qwen2.5:3b & 3{,}024 & 59.8 & 1{,}807 & 97.7 \\
+\midrule
+Pooled & 21{,}143 & 48.3 & 10{,}208 & 98.8 \\
+\bottomrule
+\end{tabular}
+
+
+\smallskip
+\parbox{0.9\textwidth}{\footnotesize\textit{Note.} Main-arm stated reasons for the chosen physician. A reason counts as using a gendered pronoun if it contains she/her/hers/herself or he/him/his/himself; agreement is computed over reasons using only one of the two sets. First names with agreement below 95\%: Yan (46\%, $n=69$); Xiu (83\%, $n=94$); Ling (88\%, $n=145$); Guadalupe (92\%, $n=240$); Cheng (93\%, $n=137$).}
+\end{table}

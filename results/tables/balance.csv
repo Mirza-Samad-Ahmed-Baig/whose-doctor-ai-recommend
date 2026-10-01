@@ -1,0 +1,28 @@
+attribute,level,share
+rating,3.9,0.3288
+rating,4.3,0.3381
+rating,4.7,0.3331
+volume,12,0.3318
+volume,85,0.3332
+volume,400,0.3351
+recency,11 months ago,0.4942
+recency,3 days ago,0.5058
+feedback_response,absent,0.4935
+feedback_response,present,0.5065
+affiliation,independent,0.4946
+affiliation,network,0.5054
+price,90,0.3363
+price,140,0.3355
+price,190,0.3282
+telehealth,0,0.497
+telehealth,1,0.503
+experience,8,0.3377
+experience,18,0.3356
+experience,28,0.3266
+gender,female,0.502
+gender,male,0.498
+ethnicity,black,0.1988
+ethnicity,east_asian,0.2026
+ethnicity,hispanic,0.2017
+ethnicity,south_asian,0.1978
+ethnicity,white,0.1992

@@ -1,0 +1,11 @@
+gender,ethnicity,n,agree_share
+female,black,1382,1.0
+female,east_asian,564,0.8705673758865248
+female,hispanic,1408,0.9850852272727273
+female,south_asian,1368,0.9970760233918129
+female,white,1165,0.9991416309012876
+male,black,816,0.9987745098039216
+male,east_asian,568,0.9665492957746479
+male,hispanic,1025,0.9990243902439024
+male,south_asian,1039,1.0
+male,white,873,0.9988545246277205
