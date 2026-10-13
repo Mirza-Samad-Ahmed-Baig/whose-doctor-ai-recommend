@@ -1,8 +1,8 @@
-# Whose doctor does the AI recommend? - data and code (revision R1)
+# Whose doctor does the AI recommend? - data and code
 
 Replication package for a randomized choice-based conjoint audit of large
 language model physician recommendation (International Journal of Medical
-Informatics, manuscript IJMEDI-D-26-04763, revision 1).
+Informatics, manuscript IJMEDI-D-26-04763)
 
 ## Contents
 - `config/experiment.yaml` - frozen experiment configuration (seed 20260702)
